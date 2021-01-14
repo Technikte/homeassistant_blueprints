@@ -83,7 +83,7 @@ condition: "{{ trigger.event.data.node_id == (ozw_node_id | int) }}"
 action:
   - variables:
       scene_id: "{{ trigger.event.data.scene_id }}"
-      scene_data: "{{ trigger.event.data.Selected_id }}"
+      scene_data: "{{ trigger.event.data.scene_value_id }}"
   - choose:
     - conditions: "{{ scene_id == 1 and scene_data == 1}}"
       sequence: !input button_1
