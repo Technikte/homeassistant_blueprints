@@ -21,6 +21,12 @@ blueprint:
       default: []
       selector:
         action: {}
+    button_1_1:
+      name: Double Press Button 1
+      description: Action to run on a double button press.
+      default: []
+      selector:
+        action: {}
     button_2:
       name: Single Press Button 2
       description: Action to run on button press.
@@ -77,9 +83,12 @@ condition: "{{ trigger.event.data.node_id == (ozw_node_id | int) }}"
 action:
   - variables:
       scene_id: "{{ trigger.event.data.scene_id }}"
+      scene_data: "{{ trigger.event.data.scene_data }}"
   - choose:
-    - conditions: "{{ scene_id == 1 }}"
+    - conditions: "{{ scene_id == 1 and scene_data == 1}}"
       sequence: !input button_1
+    - conditions: "{{ scene_id == 1 and scene_data == 4 }}"
+      sequence: !input button_1_1
     - conditions: "{{ scene_id == 2 }}"
       sequence: !input button_2
     - conditions: "{{ scene_id == 3 }}"
