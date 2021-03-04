@@ -9,11 +9,9 @@ blueprint:
       selector:
         device:
           integration: zwave_js
-          manufacturer: Remotec
-          model: BW8510
     ozw_node_id:
       name: Node ID
-      description: "Enter the node id. For now, this field is required. "
+      description: "Enter the node id. For now, this field is required."
     button_1:
       name: Single Press Button 1
       description: Action to run on button press.
