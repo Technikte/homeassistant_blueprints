@@ -1,17 +1,16 @@
 blueprint:
   name: Remotec ZRC-90
-  description: Create automations for the 'Remotec ZRC-90' using the OZW integration. 
+  description: Create automations for the 'Remotec ZRC-90' using the OZW integration.
   domain: automation
   input:
     remotec_pad:
       name: ZRC-90 8 Keypad
-      description: "List of available Remotec ZRC-90 remotes to configure. 
-      This list is only a reference."
+      description: "List of available Remotec ZRC-90 remotes to configure. This list is only a reference."
       selector:
-          device:
-            integration: ozw
-            manufacturer: Remotec
-            model: ZRC-90
+        device:
+          integration: ozw
+          manufacturer: Remotec
+          model: BW8510
     ozw_node_id:
       name: Node ID
       description: "Enter the node id. For now, this field is required. "
@@ -27,48 +26,6 @@ blueprint:
       default: []
       selector:
         action: {}
-    button_2:
-      name: Single Press Button 2
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
-    button_3:
-      name: Single Press Button 3
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
-    button_4:
-      name: Single Press Button 4
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
-    button_5:
-      name: Single Press Button 5
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
-    button_6:
-      name: Single Press Button 6
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
-    button_7:
-      name: Single Press Button 7
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
-    button_8:
-      name: Single Press Button 8
-      description: Action to run on button press.
-      default: []
-      selector:
-        action: {}
 mode: single
 max_exceeded: silent
 variables:
@@ -76,7 +33,7 @@ variables:
   ozw_node_id: !input ozw_node_id
 trigger:
   - platform: event
-    event_type: ozw.scene_activated
+    event_type: zwave.scene_activate
     event_data:
       scene_value_id: 1
 condition: "{{ trigger.event.data.node_id == (ozw_node_id | int) }}"
@@ -85,21 +42,7 @@ action:
       scene_id: "{{ trigger.event.data.scene_id }}"
       scene_data: "{{ trigger.event.data.scene_value_id }}"
   - choose:
-    - conditions: "{{ scene_id == 1 and scene_data == 1}}"
-      sequence: !input button_1
-    - conditions: "{{ scene_id == 1 and scene_data == 4 }}"
-      sequence: !input button_1_1
-    - conditions: "{{ scene_id == 2 }}"
-      sequence: !input button_2
-    - conditions: "{{ scene_id == 3 }}"
-      sequence: !input button_3
-    - conditions: "{{ scene_id == 4 }}"
-      sequence: !input button_4
-    - conditions: "{{ scene_id == 5 }}"
-      sequence: !input button_5
-    - conditions: "{{ scene_id == 6 }}"
-      sequence: !input button_6
-    - conditions: "{{ scene_id == 7 }}"
-      sequence: !input button_7
-    - conditions: "{{ scene_id == 8 }}"
-      sequence: !input button_8
+      - conditions: "{{ scene_id == 1 and scene_data == 1}}"
+        sequence: !input button_1
+      - conditions: "{{ scene_id == 1 and scene_data == 3 }}"
+        sequence: !input button_1_1
