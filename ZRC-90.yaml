@@ -31,7 +31,7 @@ variables:
   ozw_node_id: !input ozw_node_id
 trigger:
   - platform: event
-    event_type: zwave.scene_activated
+    event_type: zwave_js_event.scene_activated
 condition: "{{ trigger.event_data.node_id == (ozw_node_id | int) }}"
 action:
   - variables:
