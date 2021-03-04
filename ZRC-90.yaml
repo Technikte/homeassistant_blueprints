@@ -8,7 +8,7 @@ blueprint:
       description: "List of available Remotec ZRC-90 remotes to configure. This list is only a reference."
       selector:
         device:
-          integration: ozw
+          integration: zwave_js
           manufacturer: Remotec
           model: BW8510
     ozw_node_id:
