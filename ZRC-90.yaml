@@ -31,14 +31,12 @@ variables:
   ozw_node_id: !input ozw_node_id
 trigger:
   - platform: event
-    event_type: zwave.scene_activate
-    event_data:
-      scene_value_id: 1
-condition: "{{ trigger.event.data.node_id == (ozw_node_id | int) }}"
+    event_type: zwave.scene_activated
+condition: "{{ trigger.event_data.node_id == (ozw_node_id | int) }}"
 action:
   - variables:
-      scene_id: "{{ trigger.event.data.scene_id }}"
-      scene_data: "{{ trigger.event.data.scene_value_id }}"
+      scene_id: "{{ trigger.event_data.scene_id }}"
+      scene_data: "{{ trigger.event_data.scene_value_id }}"
   - choose:
       - conditions: "{{ scene_id == 1 and scene_data == 1}}"
         sequence: !input button_1
