@@ -31,14 +31,55 @@ variables:
   ozw_node_id: !input ozw_node_id
 trigger:
   - platform: event
-    event_type: zwave_js_event.scene_activated
-condition: "{{ trigger.event_data.node_id == (ozw_node_id | int) }}"
+    event_type: zwave_js_event.value_notification
+condition: "{{ trigger.value_notification.node_id == (ozw_node_id | int) }}"
 action:
   - variables:
-      scene_id: "{{ trigger.event_data.scene_id }}"
-      scene_data: "{{ trigger.event_data.scene_value_id }}"
+      scene_id: "{{ trigger.value_notification.property_key }}"
+      scene_data: "{{ trigger.value_notification.value_raw }}"
   - choose:
-      - conditions: "{{ scene_id == 1 and scene_data == 1}}"
+      - conditions: "{{ scene_id == 001 and scene_data == 0 }}"
         sequence: !input button_1
-      - conditions: "{{ scene_id == 1 and scene_data == 3 }}"
+      - conditions: "{{ scene_id == 001 and scene_data == 3 }}"
         sequence: !input button_1_1
+# Single Key Pres Button 1
+# {
+#    "event_type": "zwave_js_event",
+#    "data": {
+#        "type": "value_notification",
+#        "domain": "zwave_js",
+#        "node_id": 9,
+#        "home_id": 3913730099,
+#        "endpoint": 0,
+#        "device_id": "968bbd50de1012587d008fcc35e80c27",
+#        "command_class": 91,
+#        "command_class_name": "Central Scene",
+#        "label": "Scene 001",
+#        "property": "scene",
+#        "property_name": "scene",
+#        "property_key": "001",
+#        "property_key_name": "001",
+#        "value": "KeyPressed",
+#        "value_raw": 0
+#    },
+
+#Double Key Press Button 1
+# {
+#    "event_type": "zwave_js_event",
+#    "data": {
+#        "type": "value_notification",
+#        "domain": "zwave_js",
+#        "node_id": 9,
+#        "home_id": 3913730099,
+#        "endpoint": 0,
+#        "device_id": "968bbd50de1012587d008fcc35e80c27",
+#        "command_class": 91,
+#        "command_class_name": "Central Scene",
+#        "label": "Scene 001",
+#        "property": "scene",
+#        "property_name": "scene",
+#        "property_key": "001",
+#        "property_key_name": "001",
+#        "value": "KeyPressed2x",
+#        "value_raw": 3
+#    },
