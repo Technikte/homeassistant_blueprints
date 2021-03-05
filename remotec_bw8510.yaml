@@ -6,6 +6,7 @@ blueprint:
     zwave_js_node_id:
       name: Node ID
       description: "Enter the node id of the 8 button remote."
+    # Key 1
     button_1_single:
       name: Single Press Button 1
       description: Action to run on a single button press.
@@ -18,6 +19,46 @@ blueprint:
       default: []
       selector:
         action: {}
+    # Key 2
+    button_2_single:
+      name: Single Press Button 2
+      description: Action to run on a single button press.
+      default: []
+      selector:
+        action: {}
+    button_2_double:
+      name: Double Press Button 2
+      description: Action to run on a double button press.
+      default: []
+      selector:
+        action: {}
+    # Key 3
+    button_3_single:
+      name: Single Press Button 3
+      description: Action to run on a single button press.
+      default: []
+      selector:
+        action: {}
+    button_3_double:
+      name: Double Press Button 3
+      description: Action to run on a double button press.
+      default: []
+      selector:
+        action: {}
+    # Key 4
+    button_4_single:
+      name: Single Press Button 4
+      description: Action to run on a single button press.
+      default: []
+      selector:
+        action: {}
+    button_4_double:
+      name: Double Press Button 4
+      description: Action to run on a double button press.
+      default: []
+      selector:
+        action: {}
+#
 mode: queued
 max: 1
 max_exceeded: silent
@@ -38,7 +79,23 @@ action:
       key: "{{ trigger.event.data.property_key | int }}"
       mode: "{{ trigger.event.data.value_raw }}"
   - choose:
+      # Key 1
       - conditions: "{{ key == 1 and mode == 0 }}"
         sequence: !input button_1_single
       - conditions: "{{ key == 1 and mode == 3 }}"
         sequence: !input button_1_double
+      # Key 2
+      - conditions: "{{ key == 2 and mode == 0 }}"
+        sequence: !input button_2_single
+      - conditions: "{{ key == 2 and mode == 3 }}"
+        sequence: !input button_2_double
+      # Key 3
+      - conditions: "{{ key == 3 and mode == 0 }}"
+        sequence: !input button_3_single
+      - conditions: "{{ key == 3 and mode == 3 }}"
+        sequence: !input button_3_double
+      # Key 4
+      - conditions: "{{ key == 4 and mode == 0 }}"
+        sequence: !input button_4_single
+      - conditions: "{{ key == 4 and mode == 3 }}"
+        sequence: !input button_4_double
