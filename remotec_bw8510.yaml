@@ -18,7 +18,8 @@ blueprint:
       default: []
       selector:
         action: {}
-mode: single
+mode: queued
+max: 1
 max_exceeded: silent
 #
 variables:
