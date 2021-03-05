@@ -1,0 +1,43 @@
+blueprint:
+  name: Remotec Scene master
+  description: Use the 8 button of remote for automations.
+  domain: automation
+  input:
+    zwave_js_node_id:
+      name: Node ID
+      description: "Enter the node id of the 8 button remote."
+    button_1_single:
+      name: Single Press Button 1
+      description: Action to run on a single button press.
+      default: []
+      selector:
+        action: {}
+    button_1_double:
+      name: Double Press Button 1
+      description: Action to run on a double button press.
+      default: []
+      selector:
+        action: {}
+mode: single
+max_exceeded: silent
+#
+variables:
+  node_id: !input zwave_js_node_id
+#
+trigger:
+  - platform: event
+    event_type: zwave_js_event
+    event_data:
+      type: value_notification
+#
+condition: "{{ trigger.event.data.node_id == (node_id | int ) }}"
+#
+action:
+  - variables:
+      key: "{{ trigger.event.data.property_key | int }}"
+      mode: "{{ trigger.event.data.value_raw }}"
+  - choose:
+      - conditions: "{{ key == 1 and mode == 0 }}"
+        sequence: !input button_1_single
+      - conditions: "{{ key == 1 and mode == 3 }}"
+        sequence: !input button_1_double
